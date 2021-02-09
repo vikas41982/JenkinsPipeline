@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
+    stage('Code Checkout') {
       steps {
-        echo 'Added a demo step to print a message'
+        echo 'Taking latest code from repo  '
       }
     }
 
