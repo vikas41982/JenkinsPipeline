@@ -4,6 +4,7 @@ pipeline {
     stage('Code Checkout') {
       steps {
         echo 'Taking latest code from repo  '
+        input(message: 'Are you sure, you want to start', id: 'Ok')
       }
     }
 
