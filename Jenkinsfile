@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Code Checkout') {
       steps {
-        echo 'Taking latest code from repo  '
+        echo 'Taking latest code from repo'
         input(message: 'Are you sure, you want to start', id: 'Ok')
       }
     }
@@ -22,7 +22,7 @@ pipeline {
 
     stage('Deployment') {
       parallel {
-        when{branch 'master'}
+
         stage('Deployment on Dev') {
           steps {
             echo 'This is the deployment step'
