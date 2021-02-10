@@ -19,15 +19,37 @@ pipeline {
       }
     }
 
-    stage('Deployment') {
-      steps {
-        echo 'This is the deployment step'
+    stage('Deployment On Dev') {
+      parallel {
+        stage('Deployment') {
+          steps {
+            echo 'This is the deployment step'
+          }
+        }
+
+        stage('Deployment on QA') {
+          steps {
+            echo 'This step will deploy code on QA site'
+          }
+        }
+
       }
     }
 
-    stage('Test') {
-      steps {
-        echo 'After the deployment, perform the test'
+    stage('Test on Dev') {
+      parallel {
+        stage('Test on Dev') {
+          steps {
+            echo 'After the deployment, perform the test'
+          }
+        }
+
+        stage('Test On QA') {
+          steps {
+            echo 'This step will test code on QA site'
+          }
+        }
+
       }
     }
 
