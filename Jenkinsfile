@@ -21,6 +21,7 @@ pipeline {
 
     stage('Deployment') {
       parallel {
+        when{branch 'master'}
         stage('Deployment on Dev') {
           steps {
             echo 'This is the deployment step'
@@ -38,6 +39,7 @@ pipeline {
 
     stage('Test') {
       parallel {
+        when
         stage('Test on Dev') {
           steps {
             echo 'After the deployment, perform the test'
