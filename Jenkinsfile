@@ -40,7 +40,7 @@ pipeline {
 
     stage('Test') {
       parallel {
-        when
+        when { branch 'development' }
         stage('Test on Dev') {
           steps {
             echo 'After the deployment, perform the test'
