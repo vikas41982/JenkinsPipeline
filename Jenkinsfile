@@ -19,9 +19,9 @@ pipeline {
       }
     }
 
-    stage('Deployment On Dev') {
+    stage('Deployment') {
       parallel {
-        stage('Deployment') {
+        stage('Deployment on Dev') {
           steps {
             echo 'This is the deployment step'
           }
@@ -36,7 +36,7 @@ pipeline {
       }
     }
 
-    stage('Test on Dev') {
+    stage('Test') {
       parallel {
         stage('Test on Dev') {
           steps {
