@@ -4,7 +4,30 @@ pipeline {
     stage('Code Checkout') {
       steps {
         echo 'Taking latest code from repo  '
-        git(url: 'https://github.com/vikas41982/JenkinsPipeline.git', branch: 'master')
+      }
+    }
+
+    stage('Restore') {
+      steps {
+        echo 'This is the step for restoring the references/nuget packages'
+      }
+    }
+
+    stage('Compilation') {
+      steps {
+        echo 'This is the code compilation step.'
+      }
+    }
+
+    stage('Deployment') {
+      steps {
+        echo 'This is the deployment step'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        echo 'After the deployment, perform the test'
       }
     }
 
