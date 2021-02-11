@@ -1,61 +1,56 @@
 pipeline {
   agent any
   stages {
-    stage('Code Checkout') {
-      steps {
-        echo 'Taking latest code from repo'
-        input(message: 'Are you sure, you want to start', id: 'Ok')
-      }
-    }
-
-    stage('Restore') {
-      steps {
-        echo 'This is the step for restoring the references/nuget packages'
-      }
-    }
-
-    stage('Compilation') {
-      steps {
-        echo 'This is the code compilation step.'
-      }
-    }
-
-    stage('Deployment') {
+    stage('Build') {
       parallel {
-
-        stage('Deployment on Dev') {
+        stage('Build') {
           steps {
-            echo 'This is the deployment step'
+            echo 'Building the .NET Core application'
           }
         }
 
-        stage('Deployment on QA') {
+        stage('Test') {
           steps {
-            echo 'This step will deploy code on QA site'
+            echo 'Testing the application'
+            echo "Get the DriverPath ${ChromeDriverPath}"
+          }
+        }
+
+        stage('Test Log') {
+          environment {
+            LocalVariable = 'HelloLocal'
+          }
+          steps {
+            writeFile(file: 'LogTestFile.txt', text: "This is the ChromeDriverPath ${ChromeDriverPath} and localvariable Value ${LocalVariable}")
           }
         }
 
       }
     }
 
-    stage('Test') {
-      when { branch 'development' }
+    stage('Deploy') {
+      when {
+        branch 'master'
+      }
       parallel {
-        
-        stage('Test on Dev') {
+        stage('Deploy') {
           steps {
-            echo 'After the deployment, perform the test'
+            input(message: 'Do you want to Deployment ?', id: 'OK')
+            echo 'Deploying the app in IIS server'
           }
         }
 
-        stage('Test On QA') {
+        stage('Artifacts') {
           steps {
-            echo 'This step will test code on QA site'
+            archiveArtifacts 'LogTestFile.txt'
           }
         }
 
       }
     }
 
+  }
+  environment {
+    ChromeDriverPath = 'C:\\Driver\\Path\\ChromeDriver.exe'
   }
 }
